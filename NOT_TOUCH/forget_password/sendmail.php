@@ -39,12 +39,24 @@ $output['passtime'] = $getpasstime;
 $uid = $row['sid'];
 $output['sid'] = $uid;
 
+$username = $row['username'];
+
+$email = $row['email'];
+
 $token = md5($uid . $row['username'] . $row['password']); //組合驗證碼 
 $output['token'] = $token;
 
 $url = "reset.php?email=" . $email . "&token=" . $token; //構造URL 
 
 $time = date('Y-m-d H:i');
+
+$mailcontent = "您好,<br/>您的帳號為:{$username}<br/>新密碼連結:{$url}<br/>";
+$mailSubject ="=?UTF-8?B?" . base64_encode("補寄密碼信"). "?=";
+
+$mailto = $email;
+
+$mailSubject ="=?UTF-8?B?" . base64_encode("補寄密碼信"). "?=";
+
 
 
 
