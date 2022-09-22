@@ -122,7 +122,13 @@ if (empty($r)) {
           location.href = "contact_list_page.php"
         } else {
           console.log(obj);
-          alert("修改失敗");
+          if(confirm("資料沒有修改,確定不修改嗎?")){
+            location.href = "contact_list_page.php"
+          }else{
+            location.reload();
+          }
+          ;
+          
         }
 
       })
