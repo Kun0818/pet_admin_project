@@ -8,10 +8,11 @@ $output = [
   'data' => [],
   'passtime' => '',
   'sid' => '',
-  'token' => ''
+  'token' => '',
+  'email'=>''
 ];
 
-$email = @$_POST['mail'];
+
 
 $sql =
   "SELECT cd.*,md.*
@@ -33,29 +34,46 @@ try {
   $output['error'] = $ex->getMessage();
 };
 
-$getpasstime = time();
-$output['passtime'] = $getpasstime;
+$email = $row['email'];
+$output['email']=$email;
 
-$uid = $row['sid'];
-$output['sid'] = $uid;
+// $getpasstime = time();
+// $output['passtime'] = $getpasstime;
+
+// $uid = $row['sid'];
+// $output['sid'] = $uid;
 
 $username = $row['username'];
+$userpass = $row['password'];
 
-$email = $row['email'];
+// $email = $row['email'];
 
-$token = md5($uid . $row['username'] . $row['password']); //組合驗證碼 
-$output['token'] = $token;
+// $token = md5($uid . $row['username'] . $row['password']); //組合驗證碼 
+// $output['token'] = $token;
 
-$url = "reset.php?email=" . $email . "&token=" . $token; //構造URL 
+// $url = "reset.php?email=" . $email . "&token=" . $token; //構造URL 
 
-$time = date('Y-m-d H:i');
+// $time = date('Y-m-d H:i');
 
-$mailcontent = "您好,<br/>您的帳號為:{$username}<br/>新密碼連結:{$url}<br/>";
-$mailSubject ="=?UTF-8?B?" . base64_encode("補寄密碼信"). "?=";
+$mailcontent = "您好,<br/>您的帳號為:{$username}<br/>新密碼連結:{$userpass}<br/>";
+
+$mailFrom ="=?UTF-8?B?" . base64_encode("會員管理系統"). "?=<petproject1214@gmail.com>";
 
 $mailto = $email;
 
 $mailSubject ="=?UTF-8?B?" . base64_encode("補寄密碼信"). "?=";
+
+$mailHeader="From:".$mailFrom."\r\n";
+
+$mailHeader.="Content-type:text/html;charset=UTF-8";
+
+mail($mailto,$mailSubject,$mailcontent,$mailHeader);
+
+// if(!@mail($mailto,$mailSubject,$mailcontent,$mailHeader)){
+//   die('郵寄失敗');
+//   header("Location:sendmail.php?mailStats=1");
+
+// }
 
 
 
