@@ -29,7 +29,7 @@ if(empty($row)){
 // 驗證密碼
 if( $_POST['password'] === $row['password']) {
   $output['success'] = true;
-  $_SESSION['admin'] = [
+  $_SESSION['user1'] = [
       'sid' => $row['sid'],
       'username' => $row['username'],
   ];
